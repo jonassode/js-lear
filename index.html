@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <script src="races.js"></script>
+        <script src="lear.js"></script>
+        <script src="events.js"></script>
+
+	    <style type="text/css">
+        .actor {
+            background-color: yellow;
+            border: solid 1px black;
+            padding: 3px;
+            margin: 3px;
+        }
+        .image {
+            float: left;
+        }
+	    </style>
+    </head>
+    <body>
+        <div id="main"></div>
+        
+        <script>
+        
+            // Add Races
+            jslear.addCulture(Human);
+            jslear.addCulture(Centaur);
+            jslear.addCulture(DeepDwarf);
+            jslear.addCulture(Draconian);
+            jslear.addCulture(Naga);
+
+                   
+            function property(name, value){
+                return "<b>"+name+"</b> " + value + "<br>";
+            }
+
+           function draw(){
+                for ( var i = 0; i < actors.length; i++ ){
+                    var main = document.getElementById("main");
+        
+                    var actor = actors[i];
+                    
+                    var text = "<div class='actor'>";
+                    text += "<div class='image'><image src='graphics/player/base/"+actor.image+"'></div>";
+                    
+                    text += "<table width='100%'><tr><td valign='top'>";
+                    text += property("Name", actor.firstName + " " + actor.familyName);
+                    text += property("Race", actor.cultureName); 
+                    text += property("Gender", actor.genderName);
+                    text += property("Class", actor.class.Name);
+                    text += property("State", actor.state);
+
+                    text += "</td><td valign='top'>";
+
+                    text += property("* Stats *", "");
+                    text += property("Age", actor.stat("age")); 
+                    text += property("Health", actor.stat("health"));
+                    text += property("Income", actor.stat("income"));
+                    text += property("Wealth", actor.stat("wealth"));
+
+
+                    text += "</td><td valign='top'>";
+
+
+                    text += property("* Traits *", "");
+                    for ( var j = 0; j < actor.traits.length; j++){
+                        text += property("", actor.traits[j]);
+                    }
+
+                    text += "</td><td valign='top'>";
+                    text += property("* Effects *", "");
+                    
+                    for ( var j = 0; j < actor.effects.length; j++){
+                        text += property("", actor.effects[j].Name);
+                    }
+
+                    text += "</td></tr></table>";
+                
+                    text += "</div>";
+                    main.innerHTML += text;
+                }
+            }
+        
+           
+            var actors = new Array();
+
+            for ( var i = 0; i < 10; i++ ){
+                var actor = new jslear.Actor();
+                actors.push(actor);
+            }
+            
+            // Run Events
+            run_events(actors);            
+
+            draw();
+
+        
+        </script>
+    </body>
+</html>
